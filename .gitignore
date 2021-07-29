@@ -1,1 +1,3 @@
 certbot.vars.sh
+post_script.sh
+pre_script.sh

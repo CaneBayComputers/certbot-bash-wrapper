@@ -32,12 +32,17 @@ DOMAINS=domain.com,www.domain.com
 # Command to run before cert install. This is a good place to
 # stop your webserver. Default is blank (Run nothing).
 #PRE_CMD="service nginx stop"
+#PRE_CMD="pre_script.sh"
 
 # Command to run after cert install. This is a good place to
 # restart your webserver. Default is blank (Run nothing).
 #POST_CMD="service nginx start"
+#POST_CMD="post_script.sh"
 
 # Produces some output along with a dry-run that will not
 # create or renew certs but will get a cert from a staging
 # server. Default is false.
 #DEBUG=true
+
+# Force renewals. Default is false.
+#FORCE=true

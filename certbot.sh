@@ -17,8 +17,12 @@ if [ -z "$DEBUG" ]; then DEBUG=false; fi
 
 if $DEBUG; then DEBUG='-v --dry-run --test-cert'; else DEBUG=''; fi
 
+	if [ -z "$FORCE" ]; then FORCE=false; fi
+
+if $FORCE; then FORCE='--force-renewal'; else FORCE=''; fi
+
 # https://certbot.eff.org/docs/using.html
-certbot -n $DEBUG --agree-tos --email $EMAIL --no-eff-email --manual-public-ip-logging-ok --manual \
+certbot -n $DEBUG $FORCE --agree-tos --email $EMAIL --no-eff-email --manual-public-ip-logging-ok --manual \
 	--manual-auth-hook $BASEDIR/auth_hook.sh --manual-cleanup-hook $BASEDIR/cleanup_hook.sh \
 	--preferred-challenges dns --cert-name $NAME --expand -d $DOMAINS certonly
 
