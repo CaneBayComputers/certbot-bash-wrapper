@@ -14,7 +14,7 @@ EMAIL=me@example.com
 NAME=whatevername
 
 # Seperate domains and subdomains with commas.
-DOMAINS=domain.com,www.domain.com
+DOMAINS=domain.com,www.domain.com,*.domain.com
 
 # OPTIONAL
 

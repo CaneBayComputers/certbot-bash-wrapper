@@ -22,13 +22,13 @@ if [ -z "$INSTALL" ]; then
 fi
 
 # Remove bullcrap certbot installed by snap
-if snap remove certbot; then true; fi
+if snap remove certbot > /dev/null 2>&1; then true; fi
 
 # Install package maintained certbot
-if $INSTALL certbot; then true; fi
+if $INSTALL certbot > /dev/null 2>&1; then true; fi
 
 # Install AWS client
-if ! aws --version; then
+if ! aws --version > /dev/null 2>&1; then
 
 	curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
 
@@ -49,6 +49,9 @@ if [ ! -d /root/.aws ]; then
 	aws configure
 
 fi
+
+source $BASEDIR/auth_check.sh
+
 
 
 cat <<EOF
