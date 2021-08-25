@@ -11,13 +11,15 @@ BASEDIR=$(dirname "$0")
 
 source $BASEDIR/certbot.vars.sh
 
+source $BASEDIR/auth_check.sh
+
 if [ ! -z "$PRE_CMD" ]; then $PRE_CMD; fi
 
 if [ -z "$DEBUG" ]; then DEBUG=false; fi
 
 if $DEBUG; then DEBUG='-v --dry-run --test-cert'; else DEBUG=''; fi
 
-	if [ -z "$FORCE" ]; then FORCE=false; fi
+if [ -z "$FORCE" ]; then FORCE=false; fi
 
 if $FORCE; then FORCE='--force-renewal'; else FORCE=''; fi
 

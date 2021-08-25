@@ -1,3 +1,5 @@
 certbot.vars.sh
-post_script.sh
+auth_details.json
+temp_record.json
 pre_script.sh
+post_script.sh

@@ -47,6 +47,8 @@ cat temp_record.json
 
 aws route53 change-resource-record-sets --hosted-zone-id $HOST_ID --change-batch file://temp_record.json
 
+rm temp_record.json
+
 if [ -z "$WAIT" ]; then WAIT=30; fi
 
 echo "Sleeping $WAIT seconds ..."
