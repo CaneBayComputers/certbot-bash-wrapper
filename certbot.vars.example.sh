@@ -1,5 +1,7 @@
 # Copy this file, set the variables and rename to: certbot.vars.sh
 
+
+
 # REQUIRED
 
 # Email used for registration and recovery contact. Use comma to
@@ -14,20 +16,28 @@ EMAIL=me@example.com
 NAME=whatevername
 
 # Seperate domains and subdomains with commas.
-DOMAINS=domain.com,www.domain.com,*.domain.com
+# Right now wildcards domains do not work
+DOMAINS=domain.com,www.domain.com
+
+# DNS provider
+#DNS_PROVIDER=godaddy
+DNS_PROVIDER=route53
+
+# Sets the Time to Live for the DNS record.
+# GoDaddy TTL minimum is 600
+TTL=300
+
+# Sleep for specific amount of seconds before pulling new DNS
+# record, ie. wait for propagation.
+WAIT=20
+
+
 
 # OPTIONAL
 
 # Explicitly sets the command for installing system packages.
 # Default is blank (Auto detect).
 #INSTALL="apt-get -y install"
-
-# Sets the Time to Live for the DNS record. Default is 300.
-#TTL=300
-
-# Sleep for specific amount of seconds before pulling new DNS
-# record, ie. wait for propagation. Default is 30.
-#WAIT=30
 
 # Command to run before cert install. This is a good place to
 # stop your webserver. Default is blank (Run nothing).

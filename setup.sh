@@ -27,31 +27,49 @@ if snap remove certbot > /dev/null 2>&1; then true; fi
 # Install package maintained certbot
 if $INSTALL certbot > /dev/null 2>&1; then true; fi
 
-# Install AWS client
-if ! aws --version > /dev/null 2>&1; then
 
-	curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
 
-	unzip awscli-bundle.zip
 
-	rm -f awscli-bundle.zip
+if [ "$DNS_PROVIDER" = "route53" ]; then
 
-	if $INSTALL python3-venv; then true; fi
+	# Install AWS client
+	if ! aws --version > /dev/null 2>&1; then
 
-	python3 awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+		curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
 
-	rm -fR awscli-bundle
+		unzip awscli-bundle.zip
+
+		rm -f awscli-bundle.zip
+
+		if $INSTALL python3-venv; then true; fi
+
+		python3 awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
+
+		rm -fR awscli-bundle
+
+	fi
+
+	if [ ! -d /root/.aws ]; then
+
+		aws configure
+
+	fi
+
+
+
+
+
+elif [ "$DNS_PROVIDER" = "godaddy" ]; then
+
+	$INSTALL curl
+
+
+
 
 fi
 
-if [ ! -d /root/.aws ]; then
 
-	aws configure
-
-fi
-
-source $BASEDIR/auth_check.sh
-
+source $BASEDIR/auth_check_$DNS_PROVIDER.sh
 
 
 cat <<EOF
@@ -61,20 +79,6 @@ cat <<EOF
 
 Initial setup SUCCESSFUL!
 
-Enter the following before creating a cert.
-
-Apache2 SSL config:
-
-SSLCertificateFile    /etc/letsencrypt/live/$NAME/fullchain.pem
-SSLCertificateKeyFile /etc/letsencrypt/live/$NAME/privkey.pem
-
-
-Nginx SSL config:
-
-server {
-    ssl_certificate     /etc/letsencrypt/live/$NAME/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/$NAME/privkey.pem;
-    ...
-}
+======================================
 
 EOF

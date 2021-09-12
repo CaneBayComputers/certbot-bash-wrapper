@@ -8,17 +8,15 @@ BASEDIR=$(dirname "$0")
 
 source $BASEDIR/certbot.vars.sh
 
-if [ -z "$TTL" ]; then TTL=300; fi
+echo "Certbot Domain: $CERTBOT_DOMAIN"
 
-echo $CERTBOT_DOMAIN
-
-echo $CERTBOT_VALIDATION
+echo "Certbot Validation: $CERTBOT_VALIDATION"
 
 ZONE=$(sed 's/.*\.\(.*\..*\)/\1/' <<< $CERTBOT_DOMAIN)
 
 if [ -z "$ZONE" ]; then exit 1; fi
 
-echo $ZONE
+echo "Zone: $ZONE"
 
 HOST_ID=`aws route53 list-hosted-zones --output text | grep $ZONE. | cut -d $'\t' -f 3`
 
@@ -48,9 +46,5 @@ cat temp_record.json
 aws route53 change-resource-record-sets --hosted-zone-id $HOST_ID --change-batch file://temp_record.json
 
 rm temp_record.json
-
-if [ -z "$WAIT" ]; then WAIT=30; fi
-
-echo "Sleeping $WAIT seconds ..."
 
 sleep $WAIT
