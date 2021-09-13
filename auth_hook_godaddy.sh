@@ -49,4 +49,6 @@ EOT
 
 if curl -X PATCH -H "$AUTH" -H "Content-Type: application/json" -d @temp_record.json "$ENDPOINT" > /dev/null 2>&1; then true; fi
 
+rm temp_record.json
+
 sleep $WAIT
