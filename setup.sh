@@ -35,17 +35,7 @@ if [ "$DNS_PROVIDER" = "route53" ]; then
 	# Install AWS client
 	if ! aws --version > /dev/null 2>&1; then
 
-		curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
-
-		unzip awscli-bundle.zip
-
-		rm -f awscli-bundle.zip
-
-		if $INSTALL python3-venv; then true; fi
-
-		python3 awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
-
-		rm -fR awscli-bundle
+		pip3 install --upgrade awscli
 
 	fi
 
