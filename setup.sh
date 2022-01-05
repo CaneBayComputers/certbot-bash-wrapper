@@ -27,15 +27,24 @@ if snap remove certbot > /dev/null 2>&1; then true; fi
 # Install package maintained certbot
 if $INSTALL certbot > /dev/null 2>&1; then true; fi
 
-
-
-
+# Providers
 if [ "$DNS_PROVIDER" = "route53" ]; then
 
-	# Install AWS client
-	if ! aws --version > /dev/null 2>&1; then
+	if aws --version | grep aws-cli/1.; then
 
-		pip3 install --upgrade awscli
+		if pip3 uninstall awscli; then true; fi
+
+	fi
+
+	if ! aws --version; then
+
+		curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+
+		unzip awscliv2.zip
+
+		./aws/install
+
+		rm -fR aws
 
 	fi
 
@@ -45,16 +54,9 @@ if [ "$DNS_PROVIDER" = "route53" ]; then
 
 	fi
 
-
-
-
-
 elif [ "$DNS_PROVIDER" = "godaddy" ]; then
 
 	$INSTALL curl
-
-
-
 
 fi
 
