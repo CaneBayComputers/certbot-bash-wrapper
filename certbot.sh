@@ -24,7 +24,7 @@ if [ -z "$FORCE" ]; then FORCE=false; fi
 if $FORCE; then FORCE='--force-renewal'; else FORCE=''; fi
 
 # https://certbot.eff.org/docs/using.html
-certbot -n $DEBUG $FORCE --agree-tos --email $EMAIL --no-eff-email --manual \
+certbot -n $DEBUG $FORCE --agree-tos --email $EMAIL --no-eff-email --manual --manual-public-ip-logging-ok \
 	--manual-auth-hook $BASEDIR/auth_hook_$DNS_PROVIDER.sh --preferred-challenges dns --cert-name $NAME --expand -d $DOMAINS certonly
 
 if [ ! -z "$POST_CMD" ]; then $POST_CMD; fi
