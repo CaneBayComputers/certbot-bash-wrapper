@@ -58,6 +58,8 @@ elif [ "$DNS_PROVIDER" = "godaddy" ]; then
 
 	$INSTALL curl
 
+	# TODO: Create credentials file
+
 fi
 
 
