@@ -46,6 +46,8 @@ if [ "$DNS_PROVIDER" = "route53" ]; then
 
 		rm -fR aws
 
+		rm -f awscliv2.zip
+
 	fi
 
 	if [ ! -d /root/.aws ]; then
